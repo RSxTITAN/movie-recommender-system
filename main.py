@@ -38,7 +38,7 @@ def recommend_movie(movie_title, top_n=5):
     sim_scores = list(enumerate(similarity_matrix[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     top_movies_idx = [i[0] for i in sim_scores[1:top_n+1]]  
-    return dataset_fil[['Series_Title','IMDB_Rating','Gross','Meta_score','Poster_Link']].iloc[top_movies_idx]
+    return dataset_fil.iloc[top_movies_idx]
 
 
 
