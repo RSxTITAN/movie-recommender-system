@@ -45,21 +45,39 @@ def recommend_movie(movie_title, top_n=5):
 
 st.title("🎬 Movie Recommender System")
 
-# Movie selection
-selected_movie = st.selectbox("Enter movie name:", dataset_fil['Series_Title'])
+# --- Movie Selection ---
+selected_movie = st.selectbox("Search for a movie:", dataset_fil['Series_Title'])
 
-# --- Display selected movie details ---
+# --- Selected Movie Details ---
 movie = dataset_fil[dataset_fil['Series_Title'] == selected_movie].iloc[0]
 
-st.subheader(f"Selected Movie: {movie['Series_Title']}")
-st.image(movie['Poster_Link'], width=100)  # small poster
-st.write(f"**IMDB Rating:** {movie['IMDB_Rating']}")
-st.write(f"**Meta Score:** {movie['Meta_score']}")
-st.write(f"**Genre:** {movie['Genre']}")
-st.write(f"**Cast:** {movie['Star1']},{movie['Star2']},{movie['Star3']},{movie['Star4']}")
-st.write(f"**Description:** {movie.get('Overview', 'No description available')}")  # optional column
+st.subheader(f"**{movie['Series_Title']}**")
+col1, col2 = st.columns([1, 2])  # Poster on left, info on right
+
+with col1:
+    st.image(movie['Poster_Link'], width=200)  # larger poster
+
+with col2:
+    st.write(f"**IMDB Rating:** {movie['IMDB_Rating']}")
+    st.write(f"**Meta Score:** {movie['Meta_score']}")
+    st.write(f"**Genre:** {movie['Genre']}")
+    st.write(f"**Cast:** {movie['Star1']}, {movie['Star2']}, {movie['Star3']}, {movie['Star4']}")
+    st.write(f"**Description:** {movie.get('Overview', 'No description available')}")
 
 st.markdown("---")
+
+# --- Recommended Movies ---
+st.subheader("You May Also Like:")
+
+recommended = recommend_movie(selected_movie, top_n=5)
+
+cols = st.columns(5)
+for i, row in recommended.iterrows():
+    col = cols[i % 5]
+    with col:
+        st.image(row['Poster_Link'], width=120)
+        st.markdown(f"**{row['Series_Title']}**")
+        st.caption(f"⭐ {row['IMDB_Rating']} | Meta: {row['Meta_score']}")
 
 # --- Display recommended movies ---
 st.subheader("Recommended Movies:")
