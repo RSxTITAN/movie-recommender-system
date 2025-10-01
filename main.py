@@ -80,15 +80,15 @@ for i, row in recommended.iterrows():
         st.caption(f"⭐ {row['IMDB_Rating']} | Meta: {row['Meta_score']}")
 
 # --- Display recommended movies ---
-st.subheader("Recommended Movies:")
+# st.subheader("Recommended Movies:")
 
-recommended = recommend_movie(selected_movie, top_n=5)
+# recommended = recommend_movie(selected_movie, top_n=5)
 
-# Display recommendations horizontally with small posters
-cols = st.columns(5)  # 5 movies per row
-for i, row in recommended.iterrows():
-    col = cols[i % 5]  # cycle through 5 columns
-    with col:
-        st.image(row['Poster_Link'], width=100)
-        st.write(row['Series_Title'])
+# # Display recommendations horizontally with small posters
+# cols = st.columns(5)  # 5 movies per row
+# for i, row in recommended.iterrows():
+#     col = cols[i % 5]  # cycle through 5 columns
+#     with col:
+#         st.image(row['Poster_Link'], width=100)
+#         st.write(row['Series_Title'])
 
